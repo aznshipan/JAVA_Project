@@ -31,6 +31,7 @@ public class SpriteDemo extends JPanel {
 	private Image treeSprite;
 	private Image tSprite;
 	private Image PokemonFeu;
+	private Image[][] PokemonFeuMove;
 	private Image PokemonFeuEvolue;
 	private Image PokemonEau;
 	private Image PokemonEauEvolue;
@@ -39,7 +40,7 @@ public class SpriteDemo extends JPanel {
 	private Image Chasseur;
 	public static int dx;
 	public static int dy;
-	private int spriteLength = 32;
+	private int spriteLength = 50;
 
 	public SpriteDemo()
 	{
@@ -56,6 +57,28 @@ public class SpriteDemo extends JPanel {
 			Apple = ImageIO.read(new File("pomme.png"));
 			ApplePourri = ImageIO.read(new File("pommeP.png"));
 			Chasseur = ImageIO.read(new File("chasseur.png"));
+			
+			PokemonFeuMove = new Image[4][4];
+			PokemonFeuMove[0][0] = ImageIO.read(new File("Hericendre_walkdown1.png"));
+			PokemonFeuMove[0][1] = ImageIO.read(new File("Hericendre_walkdown2.png"));  //Deplacement vers le bas
+			PokemonFeuMove[0][2] = ImageIO.read(new File("Hericendre_walkdown3.png"));
+			PokemonFeuMove[0][3] = ImageIO.read(new File("Hericendre_walkdown4.png"));
+			
+			PokemonFeuMove[1][0] = ImageIO.read(new File("Hericendre_walkup1.png"));
+			PokemonFeuMove[1][1] = ImageIO.read(new File("Hericendre_walkup2.png"));  //Deplacement vers le haut
+			PokemonFeuMove[1][2] = ImageIO.read(new File("Hericendre_walkup3.png"));
+			PokemonFeuMove[1][3] = ImageIO.read(new File("Hericendre_walkup4.png"));
+			
+			PokemonFeuMove[2][0] = ImageIO.read(new File("Hericendre_walkleft1.png"));
+			PokemonFeuMove[2][1] = ImageIO.read(new File("Hericendre_walkleft2.png"));  //Deplacement vers la gauche
+			PokemonFeuMove[2][2] = ImageIO.read(new File("Hericendre_walkleft3.png"));
+			PokemonFeuMove[2][3] = ImageIO.read(new File("Hericendre_walkleft4.png"));
+			
+			PokemonFeuMove[3][0] = ImageIO.read(new File("Hericendre_walkright1.png"));
+			PokemonFeuMove[3][1] = ImageIO.read(new File("Hericendre_walkright2.png"));  //Deplacement vers la droite
+			PokemonFeuMove[3][2] = ImageIO.read(new File("Hericendre_walkright3.png"));
+			PokemonFeuMove[3][3] = ImageIO.read(new File("Hericendre_walkright4.png"));
+			
 		}
 		catch(Exception e)
 		{
@@ -65,7 +88,7 @@ public class SpriteDemo extends JPanel {
 
 		frame = new JFrame("World of Sprite");
 		frame.add(this);
-		frame.setSize(965,1000);
+		frame.setSize(1000,1040);
 		frame.setVisible(true);
 	}
 
@@ -113,18 +136,18 @@ public class SpriteDemo extends JPanel {
 	
 	}
 	public static void main(String[] args) {
-		Monde monde = new Monde(dx=30,dy=30,50);
+		Monde monde = new Monde(dx=20,dy=20,1);
 		SpriteDemo a =new SpriteDemo();
 		int step=0;
 		while(true) {
 			a.repaint();
 			monde.Refresh();
-			monde.pomme_pop(step);
+			/*monde.pomme_pop(step);
 			Pomme.duree();
-			Pomme.delete();
-			Braconnier.chasser();
+			Pomme.delete();*/ //enlever le commentement plus tard
+			//Braconnier.chasser();
 			try{
-				Thread.sleep(200); // en ms
+				Thread.sleep(400); // en ms
 			}catch(Exception e){
 				e.printStackTrace();
 			}

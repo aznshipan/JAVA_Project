@@ -15,8 +15,8 @@ public class M2 extends M{
 		return S;
 	}
 	
-	public void move(int dx, int dy) {
-		int cpt_vois=0;
+	public int move(int dx, int dy) {
+		int cpt_vois=0;/*
 		for(int i = this.getX() - 1; i <= this.getX() + 1; i++) {
 			for(int j = this.getY() - 1; j <= this.getY() + 1; j++) {
 				for(int m=0; m < Monde.getCarte().size();m++) {
@@ -37,7 +37,8 @@ public class M2 extends M{
 			x2= (int) (Math.random()*3) -1;
 		}while(Monde.testC(((x+x1+dx)%dx),((y+x2+dy)%dy)) instanceof Arbre);
 		this.x=(x+x1+dx)%dx;
-		this.y=(y+x2+dy)%dy;
+		this.y=(y+x2+dy)%dy;*/
+		return 1;
 	}
 	
 	public void evoluer() {

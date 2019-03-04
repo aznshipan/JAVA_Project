@@ -24,11 +24,12 @@ public abstract class M {
 		nb_evolution = 0;
 		
 	}
-	public void move(int dx, int dy) {
+	public int move(int dx, int dy) {
 		int x1= (int) (Math.random()*3) -1;
 		int x2= (int) (Math.random()*3) -1;
 		x=(x+x1+dx)%dx;
 		y=(y+x2+dy)%dy;
+		return 1;//a voir
 	}
 	public void manger_pomme(Pomme apple , ArrayList<Object> monde) { // A Continuer
 		for(int i = 0; i < monde.size(); i++) {

@@ -14,7 +14,10 @@ public class M1 extends M{
 		return S;
 	}
 
-	public void move(int dx, int dy) {
+	public int move(int dx, int dy) {
+		int stock_x, stock_y;
+		stock_x = this.getX();
+		stock_y = this.getY();
 		int cpt_vois=0;
 		for(int i = this.getX() - 1; i <= this.getX() + 1; i++) {
 			for(int j = this.getY() - 1; j <= this.getY() + 1; j++) {
@@ -25,7 +28,32 @@ public class M1 extends M{
 						this.y = ((Pomme) Monde.getCarte().get(m)).getY();
 						manger_pomme((Pomme) Monde.getCarte().get(m), Monde.getCarte());
 						this.evoluer();
-						return;
+						if(this.x < stock_x && this.y == stock_y) {
+							return 1; //deplacement vers la gauche
+						}
+						if(this.x > stock_x && this.y == stock_y) {
+							return 2; //deplacement vers la droite
+						}
+						if(this.x == stock_x && this.y > stock_y) {
+							return 3; //deplacement vers le bas
+						}
+						if(this.x == stock_x && this.y < stock_y) {
+							return 4; //deplacement vers le haut
+						}
+						if(this.x < stock_x && this.y < stock_y) {
+							return 5; //deplacement vers la gauche et le haut
+						}
+						if(this.x < stock_x && this.y > stock_y) {
+							return 6; //deplacement vers la gauche et le bas
+						}
+						if(this.x > stock_x && this.y < stock_y) {
+							return 7; //deplacement vers la droite et le haut
+						}
+						if(this.x > stock_x && this.y > stock_y) {
+							return 8; //deplacement vers la droite et le bas
+						}
+						return 9;// Reste sur place
+							
 					}
 				}
 			}
@@ -37,6 +65,31 @@ public class M1 extends M{
 		}while(Monde.testC(((x+x1+dx)%dx),((y+x2+dy)%dy)) instanceof Arbre);
 		this.x=(x+x1+dx)%dx;
 		this.y=(y+x2+dy)%dy;
+		if(this.x < stock_x && this.y == stock_y) {
+			return 1; //deplacement vers la gauche
+		}
+		if(this.x > stock_x && this.y == stock_y) {
+			return 2; //deplacement vers la droite
+		}
+		if(this.x == stock_x && this.y > stock_y) {
+			return 3; //deplacement vers le bas
+		}
+		if(this.x == stock_x && this.y < stock_y) {
+			return 4; //deplacement vers le haut
+		}
+		if(this.x < stock_x && this.y < stock_y) {
+			return 5; //deplacement vers la gauche et le haut
+		}
+		if(this.x < stock_x && this.y > stock_y) {
+			return 6; //deplacement vers la gauche et le bas
+		}
+		if(this.x > stock_x && this.y < stock_y) {
+			return 7; //deplacement vers la droite et le haut
+		}
+		if(this.x > stock_x && this.y > stock_y) {
+			return 8; //deplacement vers la droite et le bas
+		}
+		return 9; //Reste sur place
 	}
 	
 	public void evoluer() {

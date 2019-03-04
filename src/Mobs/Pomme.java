@@ -32,10 +32,10 @@ public class Pomme{
 	public int getStep() {
 		return step;
 	}
-	public boolean isEstPourrie() {
+	public boolean isEstPourrie() { //true si la pomme est pourrie
 		return estPourrie;
 	}
-	public static void delete() {
+	public static void delete() { //si la pomme est pourri, et Step >= 50, la pomme disparait
 		for(int i = 0; i < Monde.getCarte().size(); i++) {
 			if (Monde.getCarte().get(i) instanceof Pomme && ((Pomme)Monde.getCarte().get(i)).isEstPourrie() && ((Pomme)Monde.getCarte().get(i)).getStep() >= 50)
 				Monde.getCarte().remove(Monde.getCarte().get(i));

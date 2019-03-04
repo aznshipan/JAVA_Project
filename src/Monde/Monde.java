@@ -23,7 +23,7 @@ public class Monde {
 		dx=x;
 		dy=y;
 		for (int i=0;i<nb_A;i++) {
-			double p = Math.random();
+			/*double p = Math.random();
 			if (p <= 0.4) {
 				int x1= (int) (Math.random()*dx);
 				int y1 =(int) (Math.random()*dy);
@@ -42,17 +42,21 @@ public class Monde {
 					M2 monstre = new M2(x1, y1);
 					carte.add(monstre);
 				}
-			}
+			}*/
+			int x1= (int) (Math.random()*dx);
+			int y1 =(int) (Math.random()*dy);
+			M1 monstre = new M1(x1, y1);
+			carte.add(monstre); //à enlever plus tard
 		}
 		/*int x1,y1;
 		do {
 			x1= (int) (Math.random()*dx);
 			y1 =(int) (Math.random()*dy);
 		}while(testC(x1,y1) != null);*/
-		carte.add(new Braconnier(2, 2));
+		//carte.add(new Braconnier(2, 2));
 	}
 	
-	public void pomme_pop(int cpt) {
+	public void pomme_pop(int cpt) { //fait apparaitre des pomme sur la carte
 		if (cpt % 2 == 0) {
 			int x1;
 			int y1;
@@ -88,12 +92,11 @@ public class Monde {
 	
 	public void Refresh() {
 		for (int i=0;i<carte.size();i++) {
-			if (carte.get(i).getClass() == Mobs.M1.class || carte.get(i).getClass() == Mobs.M2.class)
+			if (carte.get(i) instanceof M)
 				((M) carte.get(i)).move(dx, dy);
-			if (carte.get(i).getClass() == Mobs.Braconnier.class) {
+			if (carte.get(i) instanceof Braconnier)
 				((Braconnier) carte.get(i)).move(dx, dy);
-			}
-			if (carte.get(i).getClass() == Pomme.class) {
+			if (carte.get(i) instanceof Pomme) {
 				((Pomme) carte.get(i)).pourrir();
 			}
 		}
