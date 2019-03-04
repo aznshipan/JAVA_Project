@@ -13,6 +13,8 @@ public class Monde {
 	private int dx;
 	private int dy;
 	private static ArrayList<Object> carte = new ArrayList<>();
+	private static int direction;
+	private int cpt = 0;
 	
 	
 	public static ArrayList<Object> getCarte() {
@@ -92,14 +94,20 @@ public class Monde {
 	
 	public void Refresh() {
 		for (int i=0;i<carte.size();i++) {
-			if (carte.get(i) instanceof M)
-				((M) carte.get(i)).move(dx, dy);
+			if (carte.get(i) instanceof M) {
+			
+				direction = ((M) carte.get(i)).move(dx, dy);
+				
+			}
 			if (carte.get(i) instanceof Braconnier)
 				((Braconnier) carte.get(i)).move(dx, dy);
 			if (carte.get(i) instanceof Pomme) {
 				((Pomme) carte.get(i)).pourrir();
 			}
 		}
+	}
+	public static int getDirection() {
+		return direction;
 	}
 	
 	public void Afficher() {
