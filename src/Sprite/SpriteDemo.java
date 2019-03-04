@@ -40,7 +40,10 @@ public class SpriteDemo extends JPanel {
 	private Image Chasseur;
 	public static int dx;
 	public static int dy;
-	private int spriteLength = 50;
+	private int spriteLength = 40;
+	private static int pas = 0;
+	private static int marcher = 0;
+	private static int cpt_pas = 0;
 
 	public SpriteDemo()
 	{
@@ -58,7 +61,7 @@ public class SpriteDemo extends JPanel {
 			ApplePourri = ImageIO.read(new File("pommeP.png"));
 			Chasseur = ImageIO.read(new File("chasseur.png"));
 			
-			PokemonFeuMove = new Image[4][4];
+			PokemonFeuMove = new Image[4][8];
 			PokemonFeuMove[0][0] = ImageIO.read(new File("Hericendre_walkdown1.png"));
 			PokemonFeuMove[0][1] = ImageIO.read(new File("Hericendre_walkdown2.png"));  //Deplacement vers le bas
 			PokemonFeuMove[0][2] = ImageIO.read(new File("Hericendre_walkdown3.png"));
@@ -73,6 +76,10 @@ public class SpriteDemo extends JPanel {
 			PokemonFeuMove[2][1] = ImageIO.read(new File("Hericendre_walkleft2.png"));  //Deplacement vers la gauche
 			PokemonFeuMove[2][2] = ImageIO.read(new File("Hericendre_walkleft3.png"));
 			PokemonFeuMove[2][3] = ImageIO.read(new File("Hericendre_walkleft4.png"));
+			PokemonFeuMove[2][4] = ImageIO.read(new File("Hericendre_walkleft1.png"));
+			PokemonFeuMove[2][5] = ImageIO.read(new File("Hericendre_walkleft2.png"));  //Deplacement vers la gauche
+			PokemonFeuMove[2][6] = ImageIO.read(new File("Hericendre_walkleft3.png"));
+			PokemonFeuMove[2][7] = ImageIO.read(new File("Hericendre_walkleft4.png"));
 			
 			PokemonFeuMove[3][0] = ImageIO.read(new File("Hericendre_walkright1.png"));
 			PokemonFeuMove[3][1] = ImageIO.read(new File("Hericendre_walkright2.png"));  //Deplacement vers la droite
@@ -88,7 +95,7 @@ public class SpriteDemo extends JPanel {
 
 		frame = new JFrame("World of Sprite");
 		frame.add(this);
-		frame.setSize(1000,1040);
+		frame.setSize(700,300);
 		frame.setVisible(true);
 	}
 
@@ -100,18 +107,21 @@ public class SpriteDemo extends JPanel {
 			{
 				try {
 				
-					if ( Monde.testC(i, j) ==null ) {
+					/*if ( Monde.testC(i, j) ==null ) {
 						
 						g2.drawImage(grassSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
 						continue;
-					}
+					}*/ g2.drawImage(grassSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
 						if (Monde.testC(i, j) instanceof M1) {
-							if (((M1) Monde.testC(i, j)).getNb_evolution() == 0)
-								g2.drawImage(PokemonFeu,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
-							if (((M1) Monde.testC(i, j)).getNb_evolution() == 1)
-								g2.drawImage(PokemonFeuEvolue,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+							if ( Monde.getDirection() == 1 ) {
+								//marcher = 0;
+								//for(pas = 0; pas < 4; pas ++) {
+									//g2.drawImage(grassSprite,spriteLength*i ,spriteLength*j,spriteLength,spriteLength, frame);
+									g2.drawImage(PokemonFeuMove[2][pas],spriteLength*i - this.marcher,spriteLength*j,spriteLength,spriteLength, frame);
+								//}
+							}
 						}
-						if (Monde.testC(i, j) instanceof M2) {
+					/*	if (Monde.testC(i, j) instanceof M2) {
 							if (((M2) Monde.testC(i, j)).getNb_evolution() == 0)
 								g2.drawImage(PokemonEau,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
 							if (((M2) Monde.testC(i, j)).getNb_evolution() == 1)
@@ -128,7 +138,7 @@ public class SpriteDemo extends JPanel {
 								g2.drawImage(ApplePourri,spriteLength*i,spriteLength*j,spriteLength-10,spriteLength-10, frame);
 						}
 						if (Monde.testC(i, j) instanceof Braconnier)
-							g2.drawImage(Chasseur,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+							g2.drawImage(Chasseur,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);*/
 
 				}catch(Exception E) {
 				}
@@ -136,22 +146,43 @@ public class SpriteDemo extends JPanel {
 	
 	}
 	public static void main(String[] args) {
-		Monde monde = new Monde(dx=20,dy=20,1);
+		
+		Monde monde = new Monde(dx=14,dy=14,1);
 		SpriteDemo a =new SpriteDemo();
-		int step=0;
+		cpt_pas = 0;
+		marcher = 0;
+		//pas = 0;
+		//int step=0;
 		while(true) {
-			a.repaint();
+			//System.out.println("'''''''''"+cpt_pas);
+			if(cpt_pas % 100000 == 0) {
 			monde.Refresh();
+			cpt_pas = 0;
+			}
+			cpt_pas += 1;
+			System.out.println("'''''''''"+pas);
+			if(pas < 7) {
+				a.repaint();
+	            pas += 1;
+			}
+			else {
+				a.repaint();
+				pas = 0;
+			}
+			marcher += 5 ;
+			if(marcher >= 50 ) {
+				marcher = 0;
+			}
 			/*monde.pomme_pop(step);
 			Pomme.duree();
 			Pomme.delete();*/ //enlever le commentement plus tard
 			//Braconnier.chasser();
 			try{
-				Thread.sleep(400); // en ms
+				Thread.sleep(200); // en ms
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			step++;
+			//step++;
 		}
 	}
 }
