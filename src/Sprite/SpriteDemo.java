@@ -44,6 +44,7 @@ public class SpriteDemo extends JPanel {
 	private static int pas = 0;
 	private static int marcher = 0;
 	private static int cpt_pas = 0;
+	private static M1 Hericendre;
 
 	public SpriteDemo()
 	{
@@ -66,11 +67,19 @@ public class SpriteDemo extends JPanel {
 			PokemonFeuMove[0][1] = ImageIO.read(new File("Hericendre_walkdown2.png"));  //Deplacement vers le bas
 			PokemonFeuMove[0][2] = ImageIO.read(new File("Hericendre_walkdown3.png"));
 			PokemonFeuMove[0][3] = ImageIO.read(new File("Hericendre_walkdown4.png"));
+			PokemonFeuMove[0][4] = ImageIO.read(new File("Hericendre_walkdown1.png"));
+			PokemonFeuMove[0][5] = ImageIO.read(new File("Hericendre_walkdown2.png"));  //Deplacement vers le bas
+			PokemonFeuMove[0][6] = ImageIO.read(new File("Hericendre_walkdown3.png"));
+			PokemonFeuMove[0][7] = ImageIO.read(new File("Hericendre_walkdown4.png"));
 			
 			PokemonFeuMove[1][0] = ImageIO.read(new File("Hericendre_walkup1.png"));
 			PokemonFeuMove[1][1] = ImageIO.read(new File("Hericendre_walkup2.png"));  //Deplacement vers le haut
 			PokemonFeuMove[1][2] = ImageIO.read(new File("Hericendre_walkup3.png"));
 			PokemonFeuMove[1][3] = ImageIO.read(new File("Hericendre_walkup4.png"));
+			PokemonFeuMove[1][4] = ImageIO.read(new File("Hericendre_walkup1.png"));
+			PokemonFeuMove[1][5] = ImageIO.read(new File("Hericendre_walkup2.png"));  //Deplacement vers le haut
+			PokemonFeuMove[1][6] = ImageIO.read(new File("Hericendre_walkup3.png"));
+			PokemonFeuMove[1][7] = ImageIO.read(new File("Hericendre_walkup4.png"));
 			
 			PokemonFeuMove[2][0] = ImageIO.read(new File("Hericendre_walkleft1.png"));
 			PokemonFeuMove[2][1] = ImageIO.read(new File("Hericendre_walkleft2.png"));  //Deplacement vers la gauche
@@ -85,6 +94,10 @@ public class SpriteDemo extends JPanel {
 			PokemonFeuMove[3][1] = ImageIO.read(new File("Hericendre_walkright2.png"));  //Deplacement vers la droite
 			PokemonFeuMove[3][2] = ImageIO.read(new File("Hericendre_walkright3.png"));
 			PokemonFeuMove[3][3] = ImageIO.read(new File("Hericendre_walkright4.png"));
+			PokemonFeuMove[3][4] = ImageIO.read(new File("Hericendre_walkright1.png"));
+			PokemonFeuMove[3][5] = ImageIO.read(new File("Hericendre_walkright2.png"));  //Deplacement vers la droite
+			PokemonFeuMove[3][6] = ImageIO.read(new File("Hericendre_walkright3.png"));
+			PokemonFeuMove[3][7] = ImageIO.read(new File("Hericendre_walkright4.png"));
 			
 		}
 		catch(Exception e)
@@ -95,31 +108,46 @@ public class SpriteDemo extends JPanel {
 
 		frame = new JFrame("World of Sprite");
 		frame.add(this);
-		frame.setSize(700,300);
+		frame.setSize(645,665);
 		frame.setVisible(true);
 	}
 
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
+		for ( int i1 = 0 ; i1 < dx ; i1++ ) {
+			for ( int j1 = 0 ; j1 < dy ; j1++ ) {
+			
+					g2.drawImage(grassSprite,spriteLength*i1,spriteLength*j1,spriteLength,spriteLength, frame);
+				}
+		}
 		for ( int i = 0 ; i < dx ; i++ )
 			for ( int j = 0 ; j < dy ; j++ )
 			{
 				try {
-				
-					/*if ( Monde.testC(i, j) ==null ) {
-						
-						g2.drawImage(grassSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
-						continue;
-					}*/ g2.drawImage(grassSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+						//g2.drawImage(grassSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
 						if (Monde.testC(i, j) instanceof M1) {
-							if ( Monde.getDirection() == 1 ) {
-								//marcher = 0;
-								//for(pas = 0; pas < 4; pas ++) {
-									//g2.drawImage(grassSprite,spriteLength*i ,spriteLength*j,spriteLength,spriteLength, frame);
-									g2.drawImage(PokemonFeuMove[2][pas],spriteLength*i - this.marcher,spriteLength*j,spriteLength,spriteLength, frame);
-								//}
+							if(cpt_pas % 8 == 0) {
+								Hericendre = (M1)(Monde.testC(i, j));
+								Hericendre.setSens();
+								}
+
+							Hericendre = (M1)(Monde.testC(i, j));
+							if ( Hericendre.getSens() == 0 ) { //va a gauche
+								g2.drawImage(PokemonFeuMove[2][pas],spriteLength*i - this.marcher,spriteLength*j,spriteLength,spriteLength, frame);
 							}
+							if ( Hericendre.getSens() == 1 ) { //va a droite
+									g2.drawImage(PokemonFeuMove[3][pas],spriteLength*i + this.marcher,spriteLength*j,spriteLength,spriteLength, frame);
+							}
+							if ( Hericendre.getSens() == 2 ) { //va en bas
+								g2.drawImage(PokemonFeuMove[0][pas],spriteLength*i ,spriteLength*j + this.marcher,spriteLength,spriteLength, frame);
+							}
+							if ( Hericendre.getSens() == 3 ) { //va en haut
+								g2.drawImage(PokemonFeuMove[1][pas],spriteLength*i ,spriteLength*j - this.marcher,spriteLength,spriteLength, frame);
+							}
+							
+							
+							
 						}
 					/*	if (Monde.testC(i, j) instanceof M2) {
 							if (((M2) Monde.testC(i, j)).getNb_evolution() == 0)
@@ -147,20 +175,11 @@ public class SpriteDemo extends JPanel {
 	}
 	public static void main(String[] args) {
 		
-		Monde monde = new Monde(dx=14,dy=14,1);
+		Monde monde = new Monde(dx=16,dy=16,10);
 		SpriteDemo a =new SpriteDemo();
 		cpt_pas = 0;
 		marcher = 0;
-		//pas = 0;
-		//int step=0;
 		while(true) {
-			//System.out.println("'''''''''"+cpt_pas);
-			if(cpt_pas % 100000 == 0) {
-			monde.Refresh();
-			cpt_pas = 0;
-			}
-			cpt_pas += 1;
-			System.out.println("'''''''''"+pas);
 			if(pas < 7) {
 				a.repaint();
 	            pas += 1;
@@ -169,19 +188,22 @@ public class SpriteDemo extends JPanel {
 				a.repaint();
 				pas = 0;
 			}
-			marcher += 5 ;
-			if(marcher >= 50 ) {
+			if(cpt_pas % 8 == 0) {
+				monde.Refresh();
+				cpt_pas = 0;
 				marcher = 0;
 			}
+			marcher += 5 ;
 			/*monde.pomme_pop(step);
 			Pomme.duree();
 			Pomme.delete();*/ //enlever le commentement plus tard
 			//Braconnier.chasser();
 			try{
-				Thread.sleep(200); // en ms
+				Thread.sleep(70); // en ms
 			}catch(Exception e){
 				e.printStackTrace();
 			}
+			cpt_pas += 1;
 			//step++;
 		}
 	}

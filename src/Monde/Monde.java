@@ -96,7 +96,7 @@ public class Monde {
 		for (int i=0;i<carte.size();i++) {
 			if (carte.get(i) instanceof M) {
 			
-				direction = ((M) carte.get(i)).move(dx, dy);
+				((M) carte.get(i)).move(dx, dy);
 				
 			}
 			if (carte.get(i) instanceof Braconnier)
