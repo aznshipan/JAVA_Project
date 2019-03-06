@@ -45,6 +45,7 @@ public class SpriteDemo extends JPanel {
 	private static int marcher = 0;
 	private static int cpt_pas = 0;
 	private static M1 Hericendre;
+	private static int step;
 
 	public SpriteDemo()
 	{
@@ -117,8 +118,22 @@ public class SpriteDemo extends JPanel {
 		Graphics2D g2 = (Graphics2D)g;
 		for ( int i1 = 0 ; i1 < dx ; i1++ ) {
 			for ( int j1 = 0 ; j1 < dy ; j1++ ) {
-			
 					g2.drawImage(grassSprite,spriteLength*i1,spriteLength*j1,spriteLength,spriteLength, frame);
+				try {
+					if (Monde.testC(i1, j1) instanceof Arbre) {
+						g2.drawImage(tSprite,spriteLength*i1,spriteLength*j1,spriteLength,spriteLength, frame);
+					}
+					if (Monde.testC(i1, j1)instanceof Pomme) {
+						g2.drawImage(grassSprite,spriteLength*i1,spriteLength*j1,spriteLength,spriteLength, frame);
+						if ((((Pomme) Monde.testC(i1, j1)).isEstPourrie() == false))
+							g2.drawImage(Apple,spriteLength*i1,spriteLength*j1,spriteLength-10,spriteLength-10, frame);
+						if ((((Pomme) Monde.testC(i1, j1)).isEstPourrie() == true))
+							g2.drawImage(ApplePourri,spriteLength*i1,spriteLength*j1,spriteLength-10,spriteLength-10, frame);
+					}
+					}catch(Exception e) {
+						
+					}
+					
 				}
 		}
 		for ( int i = 0 ; i < dx ; i++ )
@@ -175,10 +190,11 @@ public class SpriteDemo extends JPanel {
 	}
 	public static void main(String[] args) {
 		
-		Monde monde = new Monde(dx=16,dy=16,10);
+		Monde monde = new Monde(dx=25,dy=25,100);
 		SpriteDemo a =new SpriteDemo();
 		cpt_pas = 0;
 		marcher = 0;
+		step = 0;
 		while(true) {
 			if(pas < 7) {
 				a.repaint();
@@ -189,22 +205,22 @@ public class SpriteDemo extends JPanel {
 				pas = 0;
 			}
 			if(cpt_pas % 8 == 0) {
+				monde.pomme_pop(step);
+				Pomme.duree();
+				Pomme.delete();
 				monde.Refresh();
 				cpt_pas = 0;
 				marcher = 0;
 			}
 			marcher += 5 ;
-			/*monde.pomme_pop(step);
-			Pomme.duree();
-			Pomme.delete();*/ //enlever le commentement plus tard
 			//Braconnier.chasser();
 			try{
-				Thread.sleep(70); // en ms
+				Thread.sleep(10); // en ms
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 			cpt_pas += 1;
-			//step++;
+			step++;
 		}
 	}
 }

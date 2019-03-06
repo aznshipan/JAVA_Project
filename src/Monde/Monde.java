@@ -25,13 +25,8 @@ public class Monde {
 		dx=x;
 		dy=y;
 		for (int i=0;i<nb_A;i++) {
-			/*double p = Math.random();
-			if (p <= 0.4) {
-				int x1= (int) (Math.random()*dx);
-				int y1 =(int) (Math.random()*dy);
-				Arbre arbres = new Arbre(x1, y1);
-				carte.add(arbres);
-			}else {
+			double p = Math.random();
+			/*}else {
 				double p1 =  Math.random();
 				if (p1 <= 0.5) {
 					int x1= (int) (Math.random()*dx);
@@ -45,10 +40,18 @@ public class Monde {
 					carte.add(monstre);
 				}
 			}*/
-			int x1= (int) (Math.random()*dx);
-			int y1 =(int) (Math.random()*dy);
-			M1 monstre = new M1(x1, y1);
-			carte.add(monstre); //à enlever plus tard
+			if (p <= 0.4) {
+				int x1= (int) (Math.random()*dx);
+				int y1 =(int) (Math.random()*dy);
+				Arbre arbres = new Arbre(x1, y1);
+				carte.add(arbres);
+			}
+			else {
+				int x1= (int) (Math.random()*dx);
+				int y1 =(int) (Math.random()*dy);
+				M1 monstre = new M1(x1, y1);
+				carte.add(monstre);
+			}
 		}
 		/*int x1,y1;
 		do {
@@ -70,6 +73,7 @@ public class Monde {
 			carte.add(apple);
 		}
 	}
+	
 	public void detail() {
 		System.out.println("Taille :"+carte.size());
 		for (int i=0;i<carte.size();i++) {
@@ -77,6 +81,7 @@ public class Monde {
 		}
 	}
 	public static Object testC(int x,int y) {//retourne la classe de l'agent présent sur la case [x,y]
+		try {
 		for (int i=0;i<carte.size();i++) {
 			if (carte.get(i)instanceof M1 && ((M1) carte.get(i)).getX() == x && ((M1) carte.get(i)).getY() == y) //verification de la position et de la classe
 				return ((M1) carte.get(i));
@@ -88,6 +93,9 @@ public class Monde {
 				return ((Pomme) carte.get(i));
 			if (carte.get(i) instanceof Braconnier && ((Braconnier) carte.get(i)).getX() == x && ((Braconnier) carte.get(i)).getY() == y)
 				return ((Braconnier) carte.get(i));
+		}
+		}catch(Exception e) {
+			
 		}
 		return null;//S'il n'y a pas d'agent sur la case présent
 	}

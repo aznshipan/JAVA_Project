@@ -28,11 +28,6 @@ public abstract class M {
 		
 	}
 	public void move(int dx, int dy) {
-	/*	for(int i = this.getX() - 1; i <= this.getX() + 1; i++) {
-			for(int j = this.getY() - 1; j <= this.getY() + 1; j++) {
-				for(int m=0; m < Monde.getCarte().size();m++) {
-					if(Monde.getCarte().get(m).getClass() == Mobs.Pomme.class && ((Pomme) Monde.getCarte().get(m)).getX() == i && ((Pomme) Monde.getCarte().get(m)).getY() == j) {
-						cpt_vois++;*/
 		if(this.sens == 0) {
 			this.x=(this.x-1+dx)%dx;
 		}
@@ -45,10 +40,16 @@ public abstract class M {
 		if(this.sens == 3) {
 			this.y=(this.y-1+dx)%dx;
 		}
+		for(int m=  0; m < Monde.getCarte().size();m++) {
+			if(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x && ((Pomme) Monde.getCarte().get(m)).getY() == this.y) {
+				manger_pomme((Pomme) Monde.getCarte().get(m), Monde.getCarte());
+			}
+			
+		}
 	
 	}
 
-	public void manger_pomme(Pomme apple , ArrayList<Object> monde) { // A Continuer
+	public void manger_pomme(Pomme apple , ArrayList<Object> monde) {
 		for(int i = 0; i < monde.size(); i++) {
 				if(monde.get(i).equals(apple)){
 					if (apple.isEstPourrie()) 
@@ -89,11 +90,31 @@ public abstract class M {
 		return nb_evolution;
 	}
 	public int getSens() {
-		this.sens = ((int)(Math.random()*4));
 		return this.sens;
 	}
 	public void setSens() {
-		this.sens = (int)(Math.random()*4);
+		for(int m=  0; m < Monde.getCarte().size();m++) {
+			if((Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x-1 && ((Pomme) Monde.getCarte().get(m)).getY() == this.y) ||
+					(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x+1 && ((Pomme) Monde.getCarte().get(m)).getY() == this.y) ||
+					(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x && ((Pomme) Monde.getCarte().get(m)).getY() == this.y+1) ||
+					(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x && ((Pomme) Monde.getCarte().get(m)).getY() == this.y-1)) {
+				if(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x-1 && ((Pomme) Monde.getCarte().get(m)).getY() == this.y) {
+					this.sens = 0;
+				}
+				if(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x+1 && ((Pomme) Monde.getCarte().get(m)).getY() == this.y) {
+					this.sens = 1;
+				}
+				if(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x && ((Pomme) Monde.getCarte().get(m)).getY() == this.y+1) {
+					this.sens = 2;
+				}
+				if(Monde.getCarte().get(m) instanceof Pomme && ((Pomme) Monde.getCarte().get(m)).getX() == this.x && ((Pomme) Monde.getCarte().get(m)).getY() == this.y-1) {
+					this.sens = 3;
+				}
+			}
+			else {
+				this.sens = (int)(Math.random()*4);
+			}
+		}
 	}
 	
 	
