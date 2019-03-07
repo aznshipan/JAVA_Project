@@ -1,5 +1,7 @@
 package Mobs;
 
+import java.util.ArrayList;
+
 import Monde.Monde;
 
 public class M1 extends M{
@@ -40,6 +42,19 @@ public class M1 extends M{
 	public void evoluer() {
 		if(nb_pomme_manger >= 30 && nb_evolution == 0) {
 			nb_evolution ++;
+		}
+	}
+	public void manger_pomme(Pomme apple , ArrayList<Object> monde) {
+		for(int i = 0; i < monde.size(); i++) {
+				if(monde.get(i).equals(apple)){
+					if (apple.isEstPourrie()) 
+						nb_pomme_manger += 1 ;
+					else 
+						nb_pomme_manger += 2 ;
+					monde.remove(i);
+					evoluer();
+					return ;
+			}
 		}
 	}
 	public void setSens() {
